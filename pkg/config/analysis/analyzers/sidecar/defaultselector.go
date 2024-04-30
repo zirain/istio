@@ -14,13 +14,14 @@
 package sidecar
 
 import (
+	"sort"
+
 	"istio.io/api/networking/v1alpha3"
 	"istio.io/istio/pkg/config"
 	"istio.io/istio/pkg/config/analysis"
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
-	"sort"
 )
 
 // DefaultSelectorAnalyzer validates, per namespace, that there aren't multiple
