@@ -94,6 +94,7 @@ func (s *ServiceAssociationAnalyzer) analyzeDeploymentPortProtocol(r *resource.I
 			for protocol := range protMap {
 				svcNames = append(svcNames, protMap[protocol]...)
 			}
+			sort.Strings(svcNames)
 			m := msg.NewDeploymentAssociatedToMultipleServices(r, r.Metadata.FullName.Name.String(), port, svcNames)
 
 			if line, ok := util.ErrorLine(r, fmt.Sprintf(util.MetadataName)); ok {

@@ -20,6 +20,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"sort"
 )
 
 // DefaultSelectorAnalyzer validates, per namespace, that there aren't multiple
@@ -60,6 +61,7 @@ func (a *DefaultSelectorAnalyzer) Analyze(c analysis.Context) {
 	for ns, sList := range nsToSidecars {
 		if len(sList) > 1 {
 			sNames := getNames(sList)
+			sort.Strings(sNames)
 			for _, r := range sList {
 				c.Report(gvk.Sidecar, msg.NewMultipleSidecarsWithoutWorkloadSelectors(r, sNames, string(ns)))
 			}

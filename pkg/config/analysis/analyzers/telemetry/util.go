@@ -19,6 +19,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/analyzers/util"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"sort"
 )
 
 func getNames(entries []*resource.Instance) []string {
@@ -26,6 +27,7 @@ func getNames(entries []*resource.Instance) []string {
 	for _, rs := range entries {
 		names = append(names, string(rs.Metadata.FullName.Name))
 	}
+	sort.Strings(names)
 	return names
 }
 

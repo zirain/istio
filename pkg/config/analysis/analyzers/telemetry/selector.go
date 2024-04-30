@@ -15,8 +15,6 @@ package telemetry
 
 import (
 	"fmt"
-	"sort"
-
 	"k8s.io/apimachinery/pkg/labels"
 
 	"istio.io/api/telemetry/v1alpha1"
@@ -104,8 +102,6 @@ func (a *SelectorAnalyzer) Analyze(c analysis.Context) {
 		}
 
 		sNames := getNames(sList)
-		sort.Strings(sNames)
-
 		for _, rs := range sList {
 			m := msg.NewConflictingTelemetryWorkloadSelectors(rs, sNames, p.Namespace.String(), p.Name.String())
 
