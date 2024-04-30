@@ -15,6 +15,7 @@ package telemetry
 
 import (
 	"fmt"
+	"sort"
 
 	"k8s.io/apimachinery/pkg/labels"
 
@@ -103,11 +104,10 @@ func (a *SelectorAnalyzer) Analyze(c analysis.Context) {
 		}
 
 		sNames := getNames(sList)
+		sort.Strings(sNames)
 
 		for _, rs := range sList {
-
-			m := msg.NewConflictingTelemetryWorkloadSelectors(rs, sNames,
-				p.Namespace.String(), p.Name.String())
+			m := msg.NewConflictingTelemetryWorkloadSelectors(rs, sNames, p.Namespace.String(), p.Name.String())
 
 			if line, ok := util.ErrorLine(rs, fmt.Sprintf(util.MetadataName)); ok {
 				m.Line = line

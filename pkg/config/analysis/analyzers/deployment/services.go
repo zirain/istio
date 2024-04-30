@@ -15,6 +15,7 @@ package deployment
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 
 	appsv1 "k8s.io/api/apps/v1"
@@ -122,6 +123,11 @@ func (s *ServiceAssociationAnalyzer) analyzeDeploymentTargetPorts(r *resource.In
 				svcNames = append(svcNames, s)
 				ports = append(ports, p)
 			}
+
+			sort.Strings(svcNames)
+			sort.Slice(ports, func(i, j int) bool {
+				return ports[i] < ports[j]
+			})
 			m := msg.NewDeploymentConflictingPorts(r, r.Metadata.FullName.Name.String(), svcNames, targetPort, ports)
 
 			if line, ok := util.ErrorLine(r, fmt.Sprintf(util.MetadataName)); ok {

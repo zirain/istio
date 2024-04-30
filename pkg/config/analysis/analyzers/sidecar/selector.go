@@ -15,6 +15,7 @@ package sidecar
 
 import (
 	"fmt"
+	"sort"
 
 	"k8s.io/apimachinery/pkg/labels"
 
@@ -103,11 +104,11 @@ func (a *SelectorAnalyzer) Analyze(c analysis.Context) {
 		}
 
 		sNames := getNames(sList)
+		sort.Strings(sNames)
 
 		for _, rs := range sList {
 
-			m := msg.NewConflictingSidecarWorkloadSelectors(rs, sNames,
-				p.Namespace.String(), p.Name.String())
+			m := msg.NewConflictingSidecarWorkloadSelectors(rs, sNames, p.Namespace.String(), p.Name.String())
 
 			if line, ok := util.ErrorLine(rs, fmt.Sprintf(util.MetadataName)); ok {
 				m.Line = line
